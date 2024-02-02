@@ -1,1 +1,1 @@
-# university-code
+# University Code
