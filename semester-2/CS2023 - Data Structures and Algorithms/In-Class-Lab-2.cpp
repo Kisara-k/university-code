@@ -8,14 +8,14 @@
 using namespace std;
 using namespace chrono;
 
-void insertion_sort(vector<int> arr);
-void bubble_sort(vector<int> arr);
-void bubble_sort_opt(vector<int> arr);
-void selection_sort(vector<int> arr);
+void insertion_sort(vector<int>);
+void bubble_sort(vector<int>);
+void bubble_sort_opt(vector<int>);
+void selection_sort(vector<int>);
 
-void print_array(vector<int> arr);
+void print_array(vector<int>);
 double time_algorithm(vector<int>, void (*Func)(vector<int>));
-string time_algorithms(vector<int> arr, int n);
+string time_algorithms(int arr_length, int iterations);
 
 
 int main() {
@@ -25,31 +25,35 @@ int main() {
     srand(time(NULL));
 
     for(int i=0; i<1001; i+=10){
-        vector<int> numbers(i);
-
-        for (int j = 0; j < numbers.size(); ++j) {
-            numbers[j] = rand();
-        }
         
-        outputFile << time_algorithms(numbers, 10);
+        outputFile << time_algorithms(i, 10);
     }
 
     outputFile.close();
+
 }
 
-string time_algorithms(vector<int> arr, int n){
+string time_algorithms(int len, int n){
+    
+    vector<int> numbers(len);
     double a,b,c,d;
+
     for(int i=0;i<n;++i){
-        a += time_algorithm(arr,&insertion_sort);
-        b += time_algorithm(arr,&bubble_sort);
-        c += time_algorithm(arr,&bubble_sort_opt);
-        d += time_algorithm(arr,&selection_sort);
+        
+        for (int j = 0; j < numbers.size(); ++j) {
+            numbers[j] = rand();
+        }
+
+        a += time_algorithm(numbers,&insertion_sort);
+        b += time_algorithm(numbers,&bubble_sort);
+        c += time_algorithm(numbers,&bubble_sort_opt);
+        d += time_algorithm(numbers,&selection_sort);
     }
+
     ostringstream times;
-    times << arr.size() << " " << a/n << " " << b/n << " " << c/n << " " << d/n << endl;
-
+    times << numbers.size() << " " << a/n << " " << b/n << " " << c/n << " " << d/n << endl;
     cout << times.str();
-
+    
     return times.str();
 }
 
