@@ -3,6 +3,7 @@
 #include <vector>
 #include <chrono>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 using namespace chrono;
@@ -14,10 +15,12 @@ void selection_sort(vector<int> arr);
 
 void print_array(vector<int> arr);
 double time_algorithm(vector<int>, void (*Func)(vector<int>));
-void time_algorithms(vector<int> arr, int n);
+string time_algorithms(vector<int> arr, int n);
 
 
 int main() {
+    
+    ofstream outputFile("Times.txt");
 
     srand(time(NULL));
 
@@ -28,11 +31,13 @@ int main() {
             numbers[j] = rand();
         }
         
-        time_algorithms(numbers, 10);
+        outputFile << time_algorithms(numbers, 10);
     }
+
+    outputFile.close();
 }
 
-void time_algorithms(vector<int> arr, int n){
+string time_algorithms(vector<int> arr, int n){
     double a,b,c,d;
     for(int i=0;i<n;++i){
         a += time_algorithm(arr,&insertion_sort);
@@ -40,7 +45,12 @@ void time_algorithms(vector<int> arr, int n){
         c += time_algorithm(arr,&bubble_sort_opt);
         d += time_algorithm(arr,&selection_sort);
     }
-    cout << arr.size() << " " << a/n << " " << b/n << " " << c/n << " " << d/n << endl;
+    ostringstream times;
+    times << arr.size() << " " << a/n << " " << b/n << " " << c/n << " " << d/n << endl;
+
+    cout << times.str();
+
+    return times.str();
 }
 
 double time_algorithm(vector<int> arr, void (*Func)(vector<int>)) {
