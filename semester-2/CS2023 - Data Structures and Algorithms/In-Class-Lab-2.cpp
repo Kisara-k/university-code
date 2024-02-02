@@ -40,7 +40,7 @@ string time_algorithms(int len, int n){
 
     for(int i=0;i<n;++i){
         
-        for (int j = 0; j < numbers.size(); ++j) {
+        for (int j = 0; j < len; ++j) {
             numbers[j] = rand();
         }
 
@@ -51,7 +51,7 @@ string time_algorithms(int len, int n){
     }
 
     ostringstream times;
-    times << numbers.size() << " " << a/n << " " << b/n << " " << c/n << " " << d/n << endl;
+    times << len << " " << a/n << " " << b/n << " " << c/n << " " << d/n << endl;
     cout << times.str();
     
     return times.str();
